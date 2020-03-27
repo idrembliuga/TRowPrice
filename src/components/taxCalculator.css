@@ -1,0 +1,12 @@
+.card {
+  width: 25%;
+  border: 3px solid grey;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 20px 10px;
+}
+
+.blockquote {
+  margin-top: 50px;
+  text-align: right;
+}

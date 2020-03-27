@@ -1,24 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { CardDeck } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import InputCom from "./components/inputComponent";
+//import { order1, order2, order3 } from "./mokData";
+import TaxCalculator from "./components/taxCalculator";
+import "./App.css";
 
 function App() {
+  const [orders, setOrders] = useState([]);
+
+  const updateOrders = array => {
+    setOrders(orders.concat([array]));
+  };
+
+  useEffect(() => {
+    console.log(orders);
+  }, [orders]);
+
+  const order = orders
+    ? orders.map(order => (
+        <TaxCalculator key={parseInt(order.id)} order={order} />
+      ))
+    : "No Orders";
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <InputCom updateOrders={updateOrders} />
+      <CardDeck className="cardGroup">{order}</CardDeck>
     </div>
   );
 }
