@@ -9,7 +9,6 @@ import {
   totalPriceCalculator
 } from "../logicalComponents/calculator";
 
-
 function TaxCalculator(props) {
   const [taxTotal, setTaxTotal] = useState(0);
   const [orderTotal, setOrderTaxTotal] = useState(0);

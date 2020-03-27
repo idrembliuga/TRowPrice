@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Card, Form, Col, Row, Button } from "react-bootstrap";
 
+import "./inputComponent.css";
+
 export default function InputComponent(props) {
   const [item, setItem] = useState({
     id: 0,
     quantity: 0,
-    type: "",
+    type: "other",
     name: "",
     price: 0,
-    imported: ""
+    imported: false
   });
   const [orderItems, setorderItems] = useState([]);
+
+  const typeHandler = e => {
+    setItem({ ...item, type: e.target.value });
+  };
+
+  const importedHandler = () => {
+    setItem({ ...item, imported: !item.imported });
+  };
 
   const onSubmitOrder = () => {
     props.updateOrders(orderItems);
@@ -24,10 +34,10 @@ export default function InputComponent(props) {
     setItem({
       id: 0,
       quantity: 0,
-      type: "",
+      type: "other",
       name: "",
       price: 0,
-      imported: ""
+      imported: false
     });
   };
 
@@ -36,12 +46,12 @@ export default function InputComponent(props) {
 
     setItem({ ...item, [e.target.name]: e.target.value });
   };
-  // useEffect(() => {
-  //   // console.log("item single object");
-  //   // console.log(item);
-  //   console.log("item array of object");
-  //   console.log(orderItems);
-  // }, [item, orderItems]);
+  useEffect(() => {
+    console.log("item single object");
+    console.log(item);
+    // console.log("item array of object");
+    // console.log(orderItems);
+  }, [item, orderItems]);
 
   return (
     <Card style={{ width: 80 + "%", margin: "auto", marginTop: 30 + "px" }}>
@@ -103,45 +113,85 @@ export default function InputComponent(props) {
             />
           </Col>
         </Form.Group>
+       
         <Form.Group as={Row} controlId="formPlaintext">
           <Form.Label column sm="2">
-            Type of the item
+            Is imported
           </Form.Label>
-          <Col sm="10">
-            <Form.Control
-              value={item.type}
-              onChange={onInputHAndler}
-              type="text"
-              name="type"
-              placeholder="for tax purpose (book, food, medicine or other)"
+          <Row sm="10">
+            <Form.Check
+              type="checkbox"
+              label="book"
+              className="checkBox"
+              value="book"
+              checked={item.type === "book"}
+              onChange={typeHandler}
             />
-          </Col>
+            <Form.Check
+              type="checkbox"
+              label="food"
+              className="checkBox"
+              value="food"
+              checked={item.type === "food"}
+              onChange={typeHandler}
+            />
+            <Form.Check
+              type="checkbox"
+              label="medicene"
+              className="checkBox"
+              value="medicene"
+              checked={item.type === "medicene"}
+              onChange={typeHandler}
+            />
+            <Form.Check
+              type="checkbox"
+              label="other"
+              className="checkBox"
+              value="other"
+              checked={item.type === "other"}
+              onChange={typeHandler}
+            />
+          </Row>
         </Form.Group>
         <Form.Group as={Row} controlId="formPlaintext">
           <Form.Label column sm="2">
             Is imported
           </Form.Label>
-          <Col sm="10">
-            <Form.Control
-              value={item.imported}
-              onChange={onInputHAndler}
-              type="text"
-              name="imported"
-              placeholder="type imported if the item is imported"
+          <Row sm="10">
+            <Form.Check
+              className="checkBox"
+              type={"radio"}
+              id={`default-radio`}
+              label={`Imported`}
+              checked={item.imported}
+              onChange={importedHandler}
             />
-          </Col>
+            <Form.Check
+              className="checkBox"
+              type={"radio"}
+              id={`default-radio`}
+              label={`Domestic`}
+              checked={!item.imported}
+              onChange={importedHandler}
+            />
+          </Row>
         </Form.Group>
       </Form>
-      <Button type="submit" onClick={submitItem} variant="secondary">
+      <Button
+        type="submit"
+        onClick={submitItem}
+        variant="secondary"
+        className="button__custom"
+      >
         Submit Item
       </Button>
       <Button
-        style={{ marginTop: 20 + "px" }}
+        className="button__custom"
         type="submit"
         onClick={onSubmitOrder}
         variant="danger"
       >
-        Submit Oreder
+        Submit Order
       </Button>
     </Card>
   );
