@@ -11,7 +11,7 @@ export default function InputComponent(props) {
     imported: ""
   });
   const [orderItems, setorderItems] = useState([]);
-s
+
   const onSubmitOrder = () => {
     props.updateOrders(orderItems);
     setorderItems([]);
